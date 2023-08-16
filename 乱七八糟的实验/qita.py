@@ -1,0 +1,214 @@
+# coding =utf-8
+import tkinter as tk
+import re  # 正则表达式
+import urllib
+
+import requests
+
+
+window = tk.Tk()
+url = ""
+
+window.title('百度文库爬虫')
+window.geometry('500x300')
+baseNum = tk.Label(window, text='请输入网址：')
+baseNum.pack()
+base_text = tk.StringVar()
+base = tk.Entry(window, textvariable=base_text)
+base.pack()
+def xxxx():
+
+    print("wo you shuchu")
+    url = base_text.get()
+
+    content_list = kaishi(url)
+    f = open(r'C:\Users\Administrator\Desktop\123.txt', 'a+')
+
+
+
+
+    for i in range(0, len(content_list)):
+        f.write(str(content_list[i]))
+
+
+
+    print("xxxxx")
+
+    print(str(content_list))
+
+
+
+def main():
+
+    tk.Button(window, text="生成桌面文件", command=xxxx).pack()
+
+    tk.Button(window, text="退出1", command=window.quit).pack()
+
+
+
+
+    window.mainloop()
+
+
+
+
+findgupiao = re.compile('">(.*?)</p>')
+
+
+
+
+
+def kaishi(url):
+    headers = {
+        xxxxxxxxxx
+    }
+
+    request = urllib.request.Request(url, headers=headers)
+
+    html = ""
+    try:
+        response = urllib.request.urlopen(request)
+        html = response.read().decode('unicode_escape')
+    except urllib.error.URLError as e:
+        if hasattr(e, "code"):
+            print(e.code)
+        if hasattr(e, "reason"):
+            print(e.reason)
+
+    content_list=[]
+    content_list = re.findall('"c":"(.*?)","p"', html)
+
+
+
+
+
+
+
+    return content_list
+
+    # with open("rsp.html", "w+", encoding="utf-8")as f:
+    #     f.write(session.get(url1).text)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+# import requests
+# from bs4 import BeautifulSoup
+# import json
+# import csv
+# import codecs
+# import time
+
+# ua = {
+#     'User-Agent':
+#     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36'
+# }
+
+
+
+
+
+# def url_element_get(video, video_info):
+#     url_element = video.select('div.info > div.headline.clearfix > a')
+#     video_info['title'] = url_element[0].text
+#     video_info['url'] = url_element[0]['href']
+#     return video_info
+
+
+# def play_count_element_get(video, video_info):
+#     play_count_element = video.select('div.info > div.tags > span.watch-num')
+#     video_info['play_count'] = play_count_element[0].text.strip()
+#     return video_info
+
+
+# def danmu_element_get(video, video_info):
+#     danmu_element = video.select('div.info > div.tags > span.hide')
+#     video_info['danmu_count'] = danmu_element[0].text.strip()
+#     return video_info
+
+
+# def upload_time_element(video, video_info):
+#     upload_time_element = video.select('div.info > div.tags > span.time')
+#     video_info['upload_date'] = upload_time_element[0].text.strip()
+#     return video_info
+
+
+# def up_url_element_get(video, video_info):
+#     up_url_element = video.select('div.info > div.tags > span > a.up-name')
+#     video_info['author'] = up_url_element[0].text
+#     video_info['author_url'] = up_url_element[0]['href']
+#     return video_info
+
+
+
+
+
+
+
+
+# def main():
+
+#     header = ['题目(title)', '网址(url)', '播放量(play_count)', '弹幕(danmu)',
+#                    '上传时间(upload_date)', '作者UP主(author)', 'UP主个人界面(author_url)']
+#     with open('./zhoushen_bilibili.csv', 'w', encoding='utf_8_sig', newline='')as f:
+#         writer = csv.writer(f)
+#         writer.writerow(header)
+
+#         for i in range(1, 5):
+#             r = requests.get(
+#                 f'https://search.bilibili.com/all?keyword=%E5%91%A8%E6%B7%B1&page={i}', headers=ua)
+
+#             html = BeautifulSoup(r.text, 'html.parser')
+
+#             video_list = html.select('li.video-item.matrix')
+
+#             result = []
+
+#             for video in video_list:
+#                 video_info = {}
+#                 # 得到url
+#                 url_element_get(video, video_info)
+
+#                 play_count_element_get(video, video_info)
+
+#                 danmu_element_get(video, video_info)
+
+#                 upload_time_element(video, video_info)
+
+#                 up_url_element_get(video, video_info)
+
+#                 result.append(video_info)
+
+
+
+
+#         # header = ['题目(title)', '网址(url)', '播放量(play_count)', '弹幕(danmu)',
+#         #           '上传时间(upload_date)', '作者UP主(author)', 'UP主个人界面(author_url)']
+        
+#         # with open('./zhoushen_bilibili.csv', 'w', encoding='utf_8_sig', newline='')as f:
+#         #     writer = csv.writer(f)
+#         #     writer.writerow(header)
+#         #     for i, element in enumerate(result):
+#         #         print(f'处理第{i + 1}条, 共{len(result)}条')
+#         #         row = element.values()
+#         #         print(row)
+#         #         writer.writerow(row)
+#         #         time.sleep(0.5)
+    
+
+#             for i, element in enumerate(result):
+#                 print(f'处理第{i + 1}条, 共{len(result)}条')
+#                 row = element.values()
+#                 print(row)
+#                 writer.writerow(row)
+#                 time.sleep(0.5)
+
+
+# if __name__ == '__main__':
+#     main()
